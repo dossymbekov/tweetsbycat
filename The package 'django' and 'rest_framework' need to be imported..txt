@@ -1,1 +1,0 @@
-The package 'django' and 'rest_framework' need to be imported.
