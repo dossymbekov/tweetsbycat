@@ -30,8 +30,7 @@
 				<div class="container">
 					<nav class="navbar">
 						<ul class="nav nav-inline text-xs-center">
-							<li class="nav-item"><a href="#explore">Explore</a></li>
-							<li class="nav-item"><a href="#examples">Example</a></li>
+							<li class="nav-item"><a href="">Explore</a></li>
 							<li class="nav-item"><a href="mailto:whatpopular@ed.ac.uk.com?Subject=Feedbacks for What's popular">Contact</a></li>
 							<li class="nav-item"><a href="/help">Help</a></li>
 
@@ -57,151 +56,84 @@
 	<section class="hero" id="explore">
 		<div id="carousel">
 		     <div class="search_bar">
-                <form>
-                    <select placeholder="UK Cities" class="select-chosen" style="text-align:center;text-align-last:center;">
-                        <option value=""></option>
-                        <option value="1">Aberdeen</option>
-                        <option value="2">Armagh</option>
-                        <option value="3">Bangor</option>
-                        <option value="4">Bath</option>
-                        <option value="5">Belfast</option>
-                        <option value="6">Birmingham</option>
-                        <option value="7">Bradford</option>
-                        <option value="8">Brighton & Hove</option>
-                        <option value="9">Bristo</option>
-                        <option value="10">Cambridge</option>
-                        <option value="11">Canterbury</option>
-                        <option value="12">Cardiff</option>
-                        <option value="13">Carlisle</option>
-                        <option value="14">Chelmsford</option>
-                        <option value="15">Chester</option>
-                        <option value="16">Chichester</option>
-                        <option value="17">Coventry</option>
-                        <option value="18">Derby</option>
-                        <option value="19">Derry</option>
-                        <option value="20">Dundee</option>
-                        <option value="21">Durham1</option>
-                        <option value="22">Edinburgh</option>
-                        <option value="23">Ely</option>
-                        <option value="24">Exeter</option>
-                        <option value="25">Glasgow</option>
-                        <option value="26">Gloucester</option>
-                        <option value="27">Hereford</option>
-                        <option value="28">Inverness</option>
-                        <option value="29">Kingston upon Hull</option>
-                        <option value="30">Lancaster</option>
-                        <option value="31">Leeds</option>
-                        <option value="32">Leicester</option>
-                        <option value="33">Lichfield</option>
-                        <option value="34">Lincoln</option>
-                        <option value="35">Lisburn</option>
-                        <option value="36">Liverpool</option>
-                        <option value="37">London</option>
-                        <option value="38">Manchester</option>
-                        <option value="39">Newcastle upon Tyne</option>
-                        <option value="40">Newport</option>
-                        <option value="41">Newry</option>
-                        <option value="42">Norwich</option>
-                        <option value="43">Nottingham</option>
-                        <option value="44">Oxford</option>
-                        <option value="45">Perth</option>
-                        <option value="46">Peterborough</option>
-                        <option value="47">Plymouth</option>
-                        <option value="48">Portsmouth</option>
-                        <option value="49">Preston</option>
-                        <option value="50">Ripon</option>
-                        <option value="51">St Albans</option>
-                        <option value="52">St Asaph</option>
-                        <option value="53">St Davids</option>
-                        <option value="54">Salford</option>
-                        <option value="55">Salisbury</option>
-                        <option value="56">Sheffield</option>
-                        <option value="57">Southampton</option>
-                        <option value="58">Stirling</option>
-                        <option value="59">Stoke-on-Trent</option>
-                        <option value="60">Sunderland</option>
-                        <option value="61">Swansea</option>
-                        <option value="62">Truro</option>
-                        <option value="63">Wakefield</option>
-                        <option value="64">Wells</option>
-                        <option value="65">Westminster</option>
-                        <option value="66">Winchester</option>
-                        <option value="67">Wolverhampton</option>
-                        <option value="68">Worcester</option>
-                        <option value="69">York</option>
+                <form action="/getTopics/" method="get">
+                        <select name="city" placeholder="UK Cities" class="select-chosen" style="text-align:center;text-align-last:center;">
+                        <option value="Aberdeen">Aberdeen</option>
+                        <option value="Armagh">Armagh</option>
+                        <option value="Bangor">Bangor</option>
+                        <option value="Bath">Bath</option>
+                        <option value="Belfast">Belfast</option>
+                        <option value="Birmingham">Birmingham</option>
+                        <option value="Bradford">Bradford</option>
+                        <option value="Brighton & Hove">Brighton & Hove</option>
+                        <option value="Bristo">Bristo</option>
+                        <option value="Cambridge">Cambridge</option>
+                        <option value="Canterbury">Canterbury</option>
+                        <option value="Cardiff">Cardiff</option>
+                        <option value="Carlisle">Carlisle</option>
+                        <option value="Chelmsford">Chelmsford</option>
+                        <option value="Chester">Chester</option>
+                        <option value="Chichester">Chichester</option>
+                        <option value="Coventry">Coventry</option>
+                        <option value="Derby">Derby</option>
+                        <option value="Derry">Derry</option>
+                        <option value="Dundee">Dundee</option>
+                        <option value="Durham1">Durham1</option>
+                        <option value="Edinburgh">Edinburgh</option>
+                        <option value="Ely">Ely</option>
+                        <option value="Exeter">Exeter</option>
+                        <option value="Glasgow">Glasgow</option>
+                        <option value="Gloucester">Gloucester</option>
+                        <option value="Hereford">Hereford</option>
+                        <option value="Inverness">Inverness</option>
+                        <option value="Kingston upon Hull">Kingston upon Hull</option>
+                        <option value="Lancaster">Lancaster</option>
+                        <option value="Leeds">Leeds</option>
+                        <option value="Leicester">Leicester</option>
+                        <option value="Lichfield">Lichfield</option>
+                        <option value="Lincoln">Lincoln</option>
+                        <option value="Lisburn">Lisburn</option>
+                        <option value="Liverpool">Liverpool</option>
+                        <option value="London">London</option>
+                        <option value="Manchester">Manchester</option>
+                        <option value="Newcastle upon Tyne">Newcastle upon Tyne</option>
+                        <option value="Newport">Newport</option>
+                        <option value="Newry">Newry</option>
+                        <option value="Norwich">Norwich</option>
+                        <option value="Nottingham">Nottingham</option>
+                        <option value="Oxford">Oxford</option>
+                        <option value="Perth">Perth</option>
+                        <option value="Peterborough">Peterborough</option>
+                        <option value="Plymouth">Plymouth</option>
+                        <option value="Portsmouth">Portsmouth</option>
+                        <option value="Preston">Preston</option>
+                        <option value="Ripon">Ripon</option>
+                        <option value="St Albans">St Albans</option>
+                        <option value="St Asaph">St Asaph</option>
+                        <option value="St Davids">St Davids</option>
+                        <option value="Salford">Salford</option>
+                        <option value="Salisbury">Salisbury</option>
+                        <option value="Sheffield">Sheffield</option>
+                        <option value="Southampton">Southampton</option>
+                        <option value="Stirling">Stirling</option>
+                        <option value="Stoke-on-Trent">Stoke-on-Trent</option>
+                        <option value="Sunderland">Sunderland</option>
+                        <option value="Swansea">Swansea</option>
+                        <option value="Truro">Truro</option>
+                        <option value="Wakefield">Wakefield</option>
+                        <option value="Wells">Wells</option>
+                        <option value="Westminster">Westminster</option>
+                        <option value="Winchester">Winchester</option>
+                        <option value="Wolverhampton">Wolverhampton</option>
+                        <option value="Worcester">Worcester</option>
+                        <option value="York">York</option>
                     </select>
-                    <a href="/result" class="btn btn-primary" id="search">Search</a>
+                      
+                        <input type="submit" class="btn btn-primary" id="search" value = "Search">
                     </form> 
             </div>
 		</div>
-		<div class="row">
-				<div class="col-xs-12 col-md-8">
-					<ul class="nav nav-inline text-xs-center text-md-left">
-						<li class="nav-item"><a href="/policy">Privacy Policy</a></li>
-						<li class="nav-item"><a href="mailto:whatpopular@ed.ac.uk.com?Subject=Feedbacks for What's popular">Contact</a></li>
-						<li class="nav-item"><a href="/help">Help</a></li>
-					</ul>
-				</div>
-        </div>
 	</section><!-- End Hero -->
-	
-	<section class="result">
-	<br/><br/><br/>
-	<div id="container" style="min-width:500px;height:500px" >
-	<script>
-	// Make monochrome colors and set them as default for all pies
-Highcharts.getOptions().plotOptions.pie.colors = (function () {
-	var colors = [],
-		base = Highcharts.getOptions().colors[0],
-		i;
-	for (i = 0; i < 10; i += 1) {
-		// Start out with a darkened base color (negative brighten), and end
-		// up with a much brighter color
-		colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
-	}
-	return colors;
-}());
-var chart = Highcharts.chart('container', {
-	title: {
-		text: 'Most Popular Topics in United Kingdom<br/><br/><br/><br/>'
-	},
-	tooltip: {
-		pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-	},
-	plotOptions: {
-		pie: {
-			allowPointSelect: true,
-			cursor: 'pointer',
-			dataLabels: {
-				enabled: true,
-				format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-				style: {
-					color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-				}
-			}
-		}
-	},
-	series: [{
-		type: 'pie',
-		name: 'the percentage of people in UK who are interested in this aspect',
-		data: [
-			['Animals & Pets',   45.0],
-			['Antiques & Collectibles',       26.8],
-			{
-				name: 'Architecture',
-				y: 12.8,
-				sliced: true,
-				selected: true
-			},
-			['Art & Photography ',    8.5],
-			['Auto & Cycles',     6.2],
-			['Others',   0.7]
-		]
-	}]
-});</script>
-</div>
-<br/><br/><br/>
-	</section><!-- End result -->
 	
 	<footer>
 		<div class="container">

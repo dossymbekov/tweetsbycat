@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    {% load static %}
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/slick.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	
+
+	<!-- JS Scripts -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/tether.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/slick.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+	<script src="{% static 'js/exporting.js' %}"></script>
+	<script src="{% static 'js/highcharts.js' %}"></script>
+	
+	<title>What's POPULAR?</title>
+	
+</head>
+<body>
+
+	<header>
+		<div class="collapse" id="navigation">
+			<div class="bg-inverse">
+				<div class="container">
+					<nav class="navbar">
+						<ul class="nav nav-inline text-xs-center">
+							<li class="nav-item"><a href="/">Explore</a></li>
+							<li class="nav-item"><a href="mailto:whatpopular@ed.ac.uk.com?Subject=Feedbacks for What's popular">Contact</a></li>
+							<li class="nav-item"><a href="/help">Help</a></li>
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar menu">
+			<div class="container">
+					<a class="navbar-brand pull-xs-left" href="/" style="color: #F02D83">What's POPULAR?</a>
+					<button class="navbar-toggler collapsed pull-xs-right" type="button" data-toggle="collapse" data-target="#navigation">
+						<div class="hamburger_btn">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</button>
+			</div>
+		</nav>
+	</header>
+
+	<section class="result" id="result">
+	<div id="container" style="min-width:500px;height:500px;margin-top:150px;margin-bottom:100px">
+	<script>
+	var series = {{series|safe}};
+	// Make monochrome colors and set them as default for all pies
+    Highcharts.getOptions().plotOptions.pie.colors = (function () {
+	var colors = [],
+	base = Highcharts.getOptions().colors[0],i;
+	for (i = 0; i < 10; i += 1) {
+	// Start out with a darkened base color (negative brighten), and end up with a much brighter color
+		colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
+	}
+	return colors;
+    }());
+
+    var chart = Highcharts.chart('container', {
+    	title: {
+    		text: 'Most Popular Topics in United Kingdom'
+    	},
+    	tooltip: {
+    		pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    	},
+    	plotOptions: {
+    		pie: {
+    			allowPointSelect: true,
+    			cursor: 'pointer',
+    			events: {
+                   click: function (e) {
+                   pieClick(e.point.name); 
+                   }
+            	},
+    			dataLabels: {
+    				enabled: true,
+    				format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+    				style: {
+    					color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+    				}
+    			}
+    		}
+    	},
+    	series: [{
+    		type: 'pie',
+    		name: 'the percentage of people in UK who are interested in this aspect',
+    		data: [
+    			[],
+    			[],
+    			[],
+    			[],
+    			[],
+    			[]
+    		]
+    	}]
+    });
+    chart.series[0].setData(series.data);
+
+var newWindow;
+//Create function
+function pieClick(name){
+    console.log(name)
+    newWindow = window.open("","","status")
+    var post_data = {
+    "name": name,
+};
+    $.ajax({
+			url:"/getTweets/",
+			type:"POST",
+			data: post_data,
+			success: function (data) {
+                    data = JSON.parse(data);
+                        
+    newWindow.focus()            
+    var newContent = "<html><head><title>Tweets</title></head>"
+    newContent += "<body><h4>Tweets related to "
+    newContent += "<u>" + name + "</u></h4>"  
+    for(var i=0;i<data.tweets.length;i++){
+        newContent += "<h5>"
+        newContent += (i+1) + ". " + data.tweets[i]
+        newContent += "</h5>"
+    }
+    newContent += "</body></html>"
+    newWindow.document.write(newContent)
+    newWindow.document.close()    // close layout stream
+          }
+	})
+}
+
+</script>
+</div>
+
+	</section><!-- End result -->
+	
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-md-8">
+					<ul class="nav nav-inline text-xs-center text-md-left">
+						<li class="nav-item"><a href="/policy">Privacy Policy</a></li>
+						<li class="nav-item"><a href="mailto:whatpopular@ed.ac.uk.com?Subject=Feedbacks for What's popular">Contact</a></li>
+						<li class="nav-item"><a href="/help">Help</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-12">
+					<div class="copyrights text-xs-center text-md-left">© 2019 What's popular all rights reserved. designed & coded by <a href="#">TTDS Group 11</a></div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

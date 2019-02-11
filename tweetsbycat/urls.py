@@ -24,4 +24,6 @@ urlpatterns = [
     path('policy/',views.policy),
     path('result/',views.result),
     url(r'^$', views.index),
+    path('getTopics/',views.getTopics),
+    path('getTweets/',views.getTweets),
 ]
