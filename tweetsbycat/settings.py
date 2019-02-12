@@ -25,8 +25,8 @@ SECRET_KEY = 'r21w!5qz7!_*%@t_00(3fiw$0n%g_%7*6pw&f+f!2_*$*n84r8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['tweetsbycat.pythonanywhere.com']
-
+#ALLOWED_HOSTS = ['tweetsbycat.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -123,3 +123,4 @@ STATIC_ROOT = '/home/tweetsbycat/tweetsbycat/static'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+BACKEND_DIR = os.path.join(BASE_DIR, "tweetsbycat/backend")
