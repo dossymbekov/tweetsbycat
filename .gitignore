@@ -105,3 +105,8 @@ venv.bak/
 
 #vscode staff
 *.DS_Store
+
+#program staff
+feats_valid.test
+valid.test
+pred3.out
