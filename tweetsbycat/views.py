@@ -72,14 +72,15 @@ classdict2 = {   "Animals": 1,
 
 @api_view(['GET', 'POST'])
 def getTweets(request):
-    
+    print('incoming request')
     if request.method == 'POST':
         topic = request.data.get('data') 
         #get topic from front-end
     #topic = request.data.get('data') 
     cat_name = request.data['name']
-  
+    print(cat_name)
     tweets_list = getTweetsByCategory(str(classdict2[cat_name]))
+    print(tweets_list)
     #tweets=['111111','2222222222','33333333333']
     return HttpResponse(json.dumps({'tweets':tweets_list}))
 
