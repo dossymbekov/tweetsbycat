@@ -107,6 +107,6 @@ venv.bak/
 *.DS_Store
 
 #program staff
-feats_valid.test
-valid.test
-pred3.out
+#feats_valid.test
+#valid.test
+#pred3.out
