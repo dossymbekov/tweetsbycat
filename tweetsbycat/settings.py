@@ -25,7 +25,7 @@ SECRET_KEY = 'r21w!5qz7!_*%@t_00(3fiw$0n%g_%7*6pw&f+f!2_*$*n84r8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['tweetsbycat.pythonanywhere.com']
+ALLOWED_HOSTS = ['tweetsbycat.pythonanywhere.com', '127.0.0.1']
 #ALLOWED_HOSTS = []
 
 # Application definition

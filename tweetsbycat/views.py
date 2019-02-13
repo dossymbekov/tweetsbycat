@@ -94,8 +94,7 @@ def getTopics(request):
                   [classdict1[keys_list[2]],  dictt[keys_list[2]]],
                   [classdict1[keys_list[3]],  dictt[keys_list[3]]],
                   [classdict1[keys_list[4]],  dictt[keys_list[4]]]
-                ], 
-        'state_name': 'Alabama'
+                ]
     }
     '''
     pie_series1 = { 
