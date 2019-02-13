@@ -165,12 +165,12 @@ def main(geo_code):
     #print(len(tweetSet))
     classify()
     #subprocess.call(['/Users/varunsharma/Downloads/svm_multiclass/svm_multiclass_classify', '/Users/varunsharma/Downloads/TTDS DATA/feats_valid.test', '/Users/varunsharma/Downloads/svm_multiclass/model', '/Users/varunsharma/Downloads/svm_multiclass/pred3.out'])
-    subprocess.call([BACKEND_DIR+'/svm_multiclass/svm_multiclass_classify', BACKEND_DIR+'/outs/feats_valid.test', BACKEND_DIR+'/svm_multiclass/model', BACKEND_DIR+'/svm_multiclass/pred3.out'])
+    subprocess.call([BACKEND_DIR+'/svm_multiclass_linux64/svm_multiclass_classify', BACKEND_DIR+'/outs/feats_valid.test', BACKEND_DIR+'/svm_multiclass_linux64/model', BACKEND_DIR+'/svm_multiclass_linux64/pred3.out'])
     result_dict = readTopics()
     return result_dict
 
 def readTopics():
-    pwd = BACKEND_DIR+"/svm_multiclass/"
+    pwd = BACKEND_DIR+"/svm_multiclass_linux64/"
     pred_filepath = pwd + "pred3.out"
     df_p = pd.read_table(pred_filepath, header=None, sep=" ", usecols=[0])
 
