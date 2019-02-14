@@ -274,6 +274,8 @@ header .hamburger_btn span:nth-child(3){
 	background-size: cover;
 }
 
+.V {background-image: url('../img/twitter2.png');}
+
 .hero:after{
 	content: "";
 	position: absolute;

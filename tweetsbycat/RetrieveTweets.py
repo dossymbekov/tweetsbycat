@@ -8,8 +8,20 @@ from nltk.stem import PorterStemmer
 import subprocess
 import os
 from .settings import BACKEND_DIR
+import functools
 
 RE_EMOJI = re.compile('[\U00010000-\U0010ffff]', flags=re.UNICODE)
+pwd = BACKEND_DIR+"/outs/"
+feature_filepath = pwd + "feats.dic"
+df2 = pd.read_table(feature_filepath, encoding="ISO-8859-1", header=None)
+df2.columns = ['feature_id', 'feature']
+features = {}
+for index, row in df2.iterrows():
+    key = row["feature"]
+    value = row["feature_id"]
+    features[key] = value
+    
+
 
 def strip_emoji(text):
     return RE_EMOJI.sub(r'', text)
@@ -42,11 +54,18 @@ def stemming(lists):
     result = list(filter(None, list(temp)))
     return result  # return the list
 
-def loadfeatures(df2, features):
+@functools.lru_cache()
+def loadfeatures():
+    pwd = BACKEND_DIR+"/outs/"
+    feature_filepath = pwd + "feats.dic"
+    df2 = pd.read_table(feature_filepath, encoding="ISO-8859-1", header=None)
+    df2.columns = ['feature_id', 'feature']
+    features = {}
     for index, row in df2.iterrows():
         key = row["feature"]
         value = row["feature_id"]
         features[key] = value
+    return features
 
 def classify():
     stoplist = stopwords.words('english')
@@ -62,15 +81,15 @@ def classify():
     df1 = pd.read_table(test_filepath, encoding="ISO-8859-1", header=None)
 
     #pwd = "/Users/varunsharma/Downloads/TTDS DATA/"
-    pwd = BACKEND_DIR+"/outs/"
-    feature_filepath = pwd + "feats.dic"
-    df2 = pd.read_table(feature_filepath, encoding="ISO-8859-1", header=None)
+   
+   # pwd = BACKEND_DIR+"/outs/"
+   # feature_filepath = pwd + "feats.dic"
+   # df2 = pd.read_table(feature_filepath, encoding="ISO-8859-1", header=None)
 
     #df.columns = ['tweet_id', 'text', 'classification']
     df1.columns = ['tweet_id', 'text', 'classification']
-    df2.columns = ['feature_id', 'feature']
-
-    features = {}
+   
+    
 
     classdict = {"Animals": 1,
                  "Agriculture": 2,
@@ -98,7 +117,7 @@ def classify():
                  "TV and Movie": 24,
                  "Weather": 25}
 
-    loadfeatures(df2, features)
+   # features=loadfeatures()
     #with open("/Users/varunsharma/Downloads/TTDS DATA/feats_valid.test", mode="w", encoding="utf-8") as file:    
     with open(wd+"feats_valid.test", mode="w", encoding="utf-8") as file:
         for index, row in df1.iterrows():
@@ -148,7 +167,7 @@ def main(geo_code):
     with open(wd+"valid.test", mode="w", encoding="utf-8") as file:
 
         for x in range(15):
-            results = api.search(q=query, lang=language,  geocode=geo_code+",100km", since_id=old_id, count="100")
+            results = api.search(q=query, lang=language,  geocode=geo_code+",200km", since_id=old_id, count="100")
             for tweet in results:
                 count += 1
                 if tweet.id_str not in tweetSet:
@@ -157,22 +176,22 @@ def main(geo_code):
                     file.write(tweet.id_str + "\t" + strip_emoji(tweet.text).strip().replace("\n","") + "\t"+"TEST")
                     temp += 1
                     tweetSet.add(int(tweet.id_str))
-            if len(tweetSet) > 100:
+            if len(tweetSet) > 50:
                 break
-            time.sleep(2)
+            time.sleep(1)
             #print(len(tweetSet))
             old_id = max(tweetSet)
     #print(len(tweetSet))
     classify()
     #subprocess.call(['/Users/varunsharma/Downloads/svm_multiclass/svm_multiclass_classify', '/Users/varunsharma/Downloads/TTDS DATA/feats_valid.test', '/Users/varunsharma/Downloads/svm_multiclass/model', '/Users/varunsharma/Downloads/svm_multiclass/pred3.out'])
-    subprocess.call([BACKEND_DIR+'/svm_multiclass_linux64/svm_multiclass_classify', BACKEND_DIR+'/outs/feats_valid.test', BACKEND_DIR+'/svm_multiclass_linux64/model', BACKEND_DIR+'/svm_multiclass_linux64/pred3.out'])
     #subprocess.call([BACKEND_DIR+'/svm_multiclass/svm_multiclass_classify', BACKEND_DIR+'/outs/feats_valid.test', BACKEND_DIR+'/svm_multiclass/model', BACKEND_DIR+'/svm_multiclass/pred3.out'])
+    subprocess.call([BACKEND_DIR+'/svm_multiclass_linux64/svm_multiclass_classify', BACKEND_DIR+'/outs/feats_valid.test', BACKEND_DIR+'/svm_multiclass_linux64/model', BACKEND_DIR+'/svm_multiclass_linux64/pred3.out'])
     result_dict = readTopics()
     return result_dict
 
 def readTopics():
-    pwd = BACKEND_DIR+"/svm_multiclass_linux64/"
     #pwd = BACKEND_DIR+"/svm_multiclass/"
+    pwd = BACKEND_DIR+"/svm_multiclass_linux64/"
     pred_filepath = pwd + "pred3.out"
     df_p = pd.read_table(pred_filepath, header=None, sep=" ", usecols=[0])
 

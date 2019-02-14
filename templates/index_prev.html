@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    {% load static %}
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/slick.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	
+
+	<!-- JS Scripts -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/tether.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/slick.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+	<script src="{% static 'js/exporting.js' %}"></script>
+	<script src="{% static 'js/highcharts.js' %}"></script>
+	
+	<title>What's POPULAR?</title>
+	
+</head>
+<body>
+
+	<header>
+		<div class="collapse" id="navigation">
+			<div class="bg-inverse">
+				<div class="container">
+					<nav class="navbar">
+						<ul class="nav nav-inline text-xs-center">
+							<li class="nav-item"><a href="">Explore</a></li>
+							<li class="nav-item"><a href="mailto:whatpopular@ed.ac.uk.com?Subject=Feedbacks for What's popular">Contact</a></li>
+							<li class="nav-item"><a href="/help">Help</a></li>
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar menu">
+			<div class="container">
+					<a class="navbar-brand pull-xs-left" href="#">What's POPULAR?</a>
+					<button class="navbar-toggler collapsed pull-xs-right" type="button" data-toggle="collapse" data-target="#navigation">
+						<div class="hamburger_btn">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</button>
+			</div>
+		</nav>
+	</header>
+
+	<section class="hero" id="explore">
+		<div id="carousel">
+		     <div class="search_bar">
+                <form action="/getTopics/" method="get">
+                        <select name="city" id="city" placeholder="US Cities" class="select-chosen" style="text-align:center;text-align-last:center;">
+                            <option value="32.361538,-86.279118">Alabama</option>
+                            <option value="58.301935,-134.419740">Alaska</option>
+                            <option value="33.448457,-112.073844">Arizona</option>
+                            <option value="34.736009,-92.331122">Arkansas</option>
+                            <option value="38.555605,-121.468926">California</option>
+                            <option value="39.7391667,-104.984167">Colorado</option>
+                            <option value="41.767,-72.677">Connecticut</option>
+                            <option value="39.161921,-75.526755">Delaware</option>
+                            <option value="30.4518,-84.27277">Florida</option>
+                            <option value="33.76,-84.39">Georgia</option>
+                            <option value="21.30895,-157.826182">Hawaii</option>
+                            <option value="43.613739,-116.237651">Idaho</option>
+                            <option value="39.783250,-89.650373">Illinois</option>
+                            <option value="39.790942,-86.147685">Indiana</option>
+                            <option value="41.590939,-93.620866">Iowa</option>
+                            <option value="39.04,-95.69">Kansas</option>
+                            <option value="38.197274,-84.86311">Kentucky</option>
+                            <option value="30.45809,-91.140229">Louisiana</option>
+                            <option value="44.323535,-69.765261">Maine</option>
+                            <option value="38.972945,-76.501157">Maryland</option>
+                            <option value="42.2352,-71.0275">Massachusetts</option>
+                            <option value="42.7335,-84.5467">Michigan</option>
+                            <option value="44.95,-93.094">Minnesota</option>
+                            <option value="32.320,-90.207">Mississippi</option>
+                            <option value="38.572954,-92.189283">Missouri</option>
+                            <option value="46.595805,-112.027031">Montana</option>
+                            <option value="40.809868,-96.675345">Nebraska</option>
+                            <option value="39.160949,-119.753877">Nevada</option>
+                            <option value="43.220093,-71.549127">New Hampshire</option>
+                            <option value="40.221741,-74.756138">New Jersey</option>
+                            <option value="35.667231,-105.964575">New Mexico</option>
+                            <option value="42.659829,-73.781339">New York</option>
+                            <option value="35.771,-78.638">North Carolina</option>
+                            <option value="48.813343,-100.779004">North Dakota</option>
+                            <option value="39.962245,-83.000647">Ohio</option>
+                            <option value="35.482309,-97.534994">Oklahoma</option>
+                            <option value="44.931109,-123.029159">Oregon</option>
+                            <option value="40.269789,-76.875613">Pennsylvania</option>
+                            <option value="41.82355,-71.422132">Rhode Island</option>
+                            <option value="34.000,-81.035">South Carolina</option>
+                            <option value="44.367966,-100.336378">South Dakota</option>
+                            <option value="36.165,-86.784">Tennessee</option>
+                            <option value="30.266667,-97.75">Texas</option>
+                            <option value="40.7547,-111.892622">Utah</option>
+                            <option value="44.26639,-72.57194">Vermont</option>
+                            <option value="37.54,-77.46">Virginia</option>
+                            <option value="47.042418,-122.893077">Washington</option>
+                            <option value="38.349497,-81.633294">West Virginia</option>
+                            <option value="43.074722,-89.384444">Wisconsin</option>
+                            <option value="41.145548,-104.802042">Wyoming</option>
+                    </select>
+                        <input type="submit" class="btn btn-primary" id="search" value = "Search">
+				</form>
+            </div>
+		</div>
+	</section>
+	<!-- End Hero -->
+	
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-md-8">
+					<ul class="nav nav-inline text-xs-center text-md-left">
+						<li class="nav-item"><a href="/policy">Privacy Policy</a></li>
+						<li class="nav-item"><a href="mailto:whatpopular@ed.ac.uk.com?Subject=Feedbacks for What's popular">Contact</a></li>
+						<li class="nav-item"><a href="/help">Help</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-12">
+					<div class="copyrights text-xs-center text-md-left">© 2019 What's popular all rights reserved. designed & coded by <a href="#">TTDS Group 11</a></div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

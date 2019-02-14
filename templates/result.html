@@ -23,8 +23,7 @@
 	
 </head>
 <body>
-
-	<header>
+	<!--header>
 		<div class="collapse" id="navigation">
 			<div class="bg-inverse">
 				<div class="container">
@@ -51,100 +50,101 @@
 					</button>
 			</div>
 		</nav>
-	</header>
-
+	</header-->
 	<section class="result" id="result">
-	<div id="container" style="min-width:500px;height:500px;margin-top:150px;margin-bottom:100px">
-	<script>
-	var series = {{series|safe}};
-	// Make monochrome colors and set them as default for all pies
-    Highcharts.getOptions().plotOptions.pie.colors = (function () {
-	var colors = [],
-	base = Highcharts.getOptions().colors[0],i;
-	for (i = 0; i < 10; i += 1) {
-	// Start out with a darkened base color (negative brighten), and end up with a much brighter color
-		colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
+		<div id="container" style="min-width:500px;height:500px;margin-top:150px;margin-bottom:100px">
+		<script>
+		var series = {{series|safe}};
+		// Make monochrome colors and set them as default for all pies
+		Highcharts.getOptions().plotOptions.pie.colors = (function () {
+		var colors = [],
+		base = Highcharts.getOptions().colors[0],i;
+		for (i = 0; i < 10; i += 1) {
+		// Start out with a darkened base color (negative brighten), and end up with a much brighter color
+			colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
+		}
+		return colors;
+		}());
+
+
+		var obj = series.city;
+		var str1 = 'Top 5 trending topics in the United States';
+		var str2 = str1.replace('the United States', obj);
+		var chart = Highcharts.chart('container', {
+			title: {
+				text: str2
+			},
+			tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					events: {
+					click: function (e) {
+					pieClick(e.point.name); 
+					}
+					},
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+						style: {
+							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+						}
+					}
+				}
+			},
+			series: [{
+				type: 'pie',
+				name: 'the percentage of people who are interested in this aspect',
+				data: [
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				]
+			}]
+		});
+		chart.series[0].setData(series.data);
+
+	var newWindow;
+	//Create function
+	function pieClick(name){
+		console.log(name)
+		newWindow = window.open("","","status")
+		var post_data = {
+		"name": name,
+	};
+		$.ajax({
+				url:"/getTweets/",
+				type:"POST",
+				data: post_data,
+				success: function (data) {
+						data = JSON.parse(data);
+							
+		newWindow.focus()            
+		var newContent = "<html><head><title>Tweets</title><style>body{background-color:#B0C4DE}</style></head>"
+		newContent += "<body><h4>Tweets related to "
+		newContent += "<u>" + name + "</u></h4>"  
+		for(var i=0;i<data.tweets.length;i++){
+			newContent += "<h5>"
+			newContent += (i+1) + ". " + data.tweets[i]
+			newContent += "</h5>"
+		}
+		newContent += "</body></html>"
+		newWindow.document.write(newContent)
+		newWindow.document.close()    // close layout stream
+			}
+		})
 	}
-	return colors;
-    }());
 
-    var chart = Highcharts.chart('container', {
-    	title: {
-    		text: 'Most Popular Topics in the United States'
-    	},
-    	tooltip: {
-    		pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    	},
-    	plotOptions: {
-    		pie: {
-    			allowPointSelect: true,
-    			cursor: 'pointer',
-    			events: {
-                   click: function (e) {
-                   pieClick(e.point.name); 
-                   }
-            	},
-    			dataLabels: {
-    				enabled: true,
-    				format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-    				style: {
-    					color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-    				}
-    			}
-    		}
-    	},
-    	series: [{
-    		type: 'pie',
-    		name: 'the percentage of people who are interested in this aspect',
-    		data: [
-    			[],
-    			[],
-    			[],
-    			[],
-    			[],
-    			[]
-    		]
-    	}]
-    });
-    chart.series[0].setData(series.data);
-
-var newWindow;
-//Create function
-function pieClick(name){
-    console.log(name)
-    newWindow = window.open("","","status")
-    var post_data = {
-    "name": name,
-};
-    $.ajax({
-			url:"/getTweets/",
-			type:"POST",
-			data: post_data,
-			success: function (data) {
-                    data = JSON.parse(data);
-                        
-    newWindow.focus()            
-    var newContent = "<html><head><title>Tweets</title></head>"
-    newContent += "<body><h4>Tweets related to "
-    newContent += "<u>" + name + "</u></h4>"  
-    for(var i=0;i<data.tweets.length;i++){
-        newContent += "<h5>"
-        newContent += (i+1) + ". " + data.tweets[i]
-        newContent += "</h5>"
-    }
-    newContent += "</body></html>"
-    newWindow.document.write(newContent)
-    newWindow.document.close()    // close layout stream
-          }
-	})
-}
-
-</script>
-</div>
-
-	</section><!-- End result -->
-	
-	<footer>
+	</script>
+		</div>
+	</section>
+	<!--footer>
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-md-8">
@@ -159,8 +159,7 @@ function pieClick(name){
 				</div>
 			</div>
 		</div>
-	</footer>
-	
+	</footer-->
 </body>
 </html>
 
