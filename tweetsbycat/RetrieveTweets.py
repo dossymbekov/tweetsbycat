@@ -176,7 +176,7 @@ def main(geo_code):
                     file.write(tweet.id_str + "\t" + strip_emoji(tweet.text).strip().replace("\n","") + "\t"+"TEST")
                     temp += 1
                     tweetSet.add(int(tweet.id_str))
-            if len(tweetSet) > 150:
+            if len(tweetSet) > 100:
                 break
             time.sleep(1)
             #print(len(tweetSet))
