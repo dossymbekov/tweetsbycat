@@ -8,11 +8,13 @@ from nltk.stem import PorterStemmer
 import subprocess
 import os
 from .settings import BACKEND_DIR
+from .settings import SVM_ClASSIFIER_DIR
 import functools
+#lemmatizer = WordNetLemmatizer()
+#nltk.download('wordnet')
 
 RE_EMOJI = re.compile('[\U00010000-\U0010ffff]', flags=re.UNICODE)
-pwd = BACKEND_DIR+"/outs/"
-feature_filepath = pwd + "feats.dic"
+feature_filepath = BACKEND_DIR+"/outs/feats.dic"
 df2 = pd.read_table(feature_filepath, encoding="ISO-8859-1", header=None)
 df2.columns = ['feature_id', 'feature']
 features = {}
@@ -21,8 +23,6 @@ for index, row in df2.iterrows():
     value = row["feature_id"]
     features[key] = value
     
-
-
 def strip_emoji(text):
     return RE_EMOJI.sub(r'', text)
 
@@ -39,7 +39,6 @@ def load_api():
 def preprocess(lines, s):
     text1 = lines.lower()   # do lower casing
     result = re.sub("http\S*", "", text1)  # remove the http links
-
     result1 = re.sub("RT \S*", "", result)
     reg2 = '[^\w\#\@\_]'
     out = re.compile(reg2).split(result1)
@@ -54,10 +53,17 @@ def stemming(lists):
     result = list(filter(None, list(temp)))
     return result  # return the list
 
+def lemmatization(lists):
+    temp1 = set()  # create a set to avoid duplicates
+    for w in lists:
+        w1 = lemmatizer.lemmatize(w, getwordnetpos(w))
+        temp1.add(w1)
+    result = list(filter(None, list(temp1)))
+    return result  # return the list
+
 @functools.lru_cache()
 def loadfeatures():
-    pwd = BACKEND_DIR+"/outs/"
-    feature_filepath = pwd + "feats.dic"
+    feature_filepath = BACKEND_DIR+"/outs/feats.dic"
     df2 = pd.read_table(feature_filepath, encoding="ISO-8859-1", header=None)
     df2.columns = ['feature_id', 'feature']
     features = {}
@@ -69,57 +75,14 @@ def loadfeatures():
 
 def classify():
     stoplist = stopwords.words('english')
-
     s = set(stoplist)
 
-    #wd = "/Users/varunsharma/Downloads/TTDS DATA/"
-    wd = BACKEND_DIR+"/outs/"
-    #train_filepath = wd+"Tweets.cat.train"
-    #df = pd.read_table(train_filepath, encoding="ISO-8859-1", header=None)
+    valid_filepath = BACKEND_DIR+"/outs/valid.test"
+    df1 = pd.read_table(valid_filepath, encoding="ISO-8859-1", header=None)
 
-    test_filepath = wd + "valid.test"
-    df1 = pd.read_table(test_filepath, encoding="ISO-8859-1", header=None)
-
-    #pwd = "/Users/varunsharma/Downloads/TTDS DATA/"
-   
-   # pwd = BACKEND_DIR+"/outs/"
-   # feature_filepath = pwd + "feats.dic"
-   # df2 = pd.read_table(feature_filepath, encoding="ISO-8859-1", header=None)
-
-    #df.columns = ['tweet_id', 'text', 'classification']
+    feats_valid_filepath = BACKEND_DIR+"/outs/feats_valid.test"
     df1.columns = ['tweet_id', 'text', 'classification']
-   
-    
-
-    classdict = {"Animals": 1,
-                 "Agriculture": 2,
-                 "Architecture": 3,
-                 "Art and Photography": 4,
-                 "Automobile": 5,
-                 "Business & Finance": 6,
-                 "Children": 7,
-                 "Comics & Humor": 8,
-                 "Computers and Electronics": 9,
-                 "Food and Beverages": 10,
-                 "Education": 11,
-                 "Ethnic": 12,
-                 "Fashion and Style": 13,
-                 "Health and Fitness": 14,
-                 "History": 15,
-                 "Literature": 16,
-                 "Medical": 17,
-                 "Music": 18,
-                 "Politics": 19,
-                 "Psychology": 20,
-                 "Religion": 21,
-                 "Science and Nature": 22,
-                 "Sports and Recreation": 23,
-                 "TV and Movie": 24,
-                 "Weather": 25}
-
-   # features=loadfeatures()
-    #with open("/Users/varunsharma/Downloads/TTDS DATA/feats_valid.test", mode="w", encoding="utf-8") as file:    
-    with open(wd+"feats_valid.test", mode="w", encoding="utf-8") as file:
+    with open(feats_valid_filepath, mode="w", encoding="utf-8") as file:
         for index, row in df1.iterrows():
             wordList = []
             text = row["text"]
@@ -156,15 +119,12 @@ def main(geo_code):
     old_id = ""
 
     results = api.search(q=query, lang=language, geocode="39.8,-95.583068847656,2500km", count="1")
-    #print(len(results))
     count = 0
     temp = 0
-
-    wd = BACKEND_DIR+'/outs/'
-
+    
     for tweet in results:
         old_id = tweet.id_str
-    with open(wd+"valid.test", mode="w", encoding="utf-8") as file:
+    with open(BACKEND_DIR+'/outs/valid.test', mode="w", encoding="utf-8") as file:
 
         for x in range(15):
             results = api.search(q=query, lang=language,  geocode=geo_code+",200km", since_id=old_id, count="100")
@@ -179,21 +139,14 @@ def main(geo_code):
             if len(tweetSet) > 99:
                 break
             time.sleep(1)
-            #print(len(tweetSet))
             old_id = max(tweetSet)
-    #print(len(tweetSet))
     classify()
-    #subprocess.call(['/Users/varunsharma/Downloads/svm_multiclass/svm_multiclass_classify', '/Users/varunsharma/Downloads/TTDS DATA/feats_valid.test', '/Users/varunsharma/Downloads/svm_multiclass/model', '/Users/varunsharma/Downloads/svm_multiclass/pred3.out'])
-    #subprocess.call([BACKEND_DIR+'/svm_multiclass/svm_multiclass_classify', BACKEND_DIR+'/outs/feats_valid.test', BACKEND_DIR+'/svm_multiclass/model', BACKEND_DIR+'/svm_multiclass/pred3.out'])
-    subprocess.call([BACKEND_DIR+'/svm_multiclass_linux64/svm_multiclass_classify', BACKEND_DIR+'/outs/feats_valid.test', BACKEND_DIR+'/svm_multiclass_linux64/model', BACKEND_DIR+'/svm_multiclass_linux64/pred3.out'])
+    subprocess.call([SVM_ClASSIFIER_DIR+'/svm_multiclass_classify', BACKEND_DIR+'/outs/feats_valid.test', SVM_ClASSIFIER_DIR+'/model', SVM_ClASSIFIER_DIR+'/pred3.out'])
     result_dict = readTopics()
     return result_dict
 
 def readTopics():
-    #pwd = BACKEND_DIR+"/svm_multiclass/"
-    pwd = BACKEND_DIR+"/svm_multiclass_linux64/"
-    pred_filepath = pwd + "pred3.out"
-    df_p = pd.read_table(pred_filepath, header=None, sep=" ", usecols=[0])
+    df_p = pd.read_table(SVM_ClASSIFIER_DIR + "/pred3.out", header=None, sep=" ", usecols=[0])
 
     freq_ordered = df_p[0].value_counts()
     top5 = freq_ordered.head(5)
@@ -203,5 +156,7 @@ def readTopics():
     top5_percent = ((top5df[0]/total)*100).to_frame()
     top5_dict = top5_percent.to_dict()[0]
     return top5_dict
+
+# function for testing connection
 def hello(strr):
     return str('Hello '+strr)

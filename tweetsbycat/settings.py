@@ -123,4 +123,19 @@ STATIC_ROOT = '/home/tweetsbycat/tweetsbycat/static'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
 BACKEND_DIR = os.path.join(BASE_DIR, "tweetsbycat/backend")
+
+
+'''
+DEPENDING ON YOUR OS CHOOSE THE APPROCIATE 
+VALUE FOR RUNTIME_OS.
+COMMENT UNUSED ONE.
+'''
+RUNTIME_OS = 'MACOS'
+#RUNTIME_OS = 'LINUX'
+
+if RUNTIME_OS == 'LINUX':
+    SVM_ClASSIFIER_DIR = os.path.join(BASE_DIR, "tweetsbycat/backend/svm_multiclass_linux64")
+else:
+    SVM_ClASSIFIER_DIR = os.path.join(BASE_DIR, "tweetsbycat/backend/svm_multiclass")

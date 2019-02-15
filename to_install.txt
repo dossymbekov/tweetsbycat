@@ -1,3 +1,13 @@
+################################
+before running
+0. Install python 3.6 or up
+1. install these packages
+2. download stopwords
+3. define operating system you are running:
+   Change the value of RUNTIME_OS in settings.py
+   to either 'MACOS' or 'LINUX'
+   Can run only MACOS or LINUX.
+################################
 
 pip install django
 pip install djangorestframework
@@ -5,8 +15,12 @@ pip install tweepy
 pip install pandas
 pip install nltk
 
+
 --------- stopwords -------------
 python3
 >>> import nltk
 >>> nltk.download('stopwords')
 ---------------------------------
+
+gitub repository
+https://github.com/dossymbekov/tweetsbycat.git
